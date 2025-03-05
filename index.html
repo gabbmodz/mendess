@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU TE AMO SOFIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap" rel="stylesheet"> <!-- Fonte estilo skatista -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #ffb6c1;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        .heart {
+            position: absolute;
+            top: -50px;
+            font-size: 30px;
+            animation: heartFall 6s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes heartFall {
+            0% {
+                transform: translateY(-50px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .heart:after {
+            content: '💘';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: heartArrow 1s infinite;
+        }
+
+        @keyframes heartArrow {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Envelope */
+        .envelope-container {
+            width: 250px;
+            height: 150px;
+            background-color: #ff6347;
+            border-radius: 10px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.5s ease-in-out;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .envelope {
+            width: 100%;
+            height: 100%;
+            background-color: #e57373;
+            border-radius: 10px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: top;
+            transition: transform 0.7s ease-in-out;
+        }
+
+        .envelope::before {
+            content: "";
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Nome com animação caindo */
+        .name {
+            position: absolute;
+            font-family: 'Rock Salt', cursive;
+            font-size: 60px;
+            color: #333;
+            animation: nameFall 3s ease-in-out infinite;
+            z-index: 10;
+        }
+
+        @keyframes nameFall {
+            0% {
+                top: -100px;
+                opacity: 1;
+            }
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+
+        /* Frases e emojis */
+        .phrase, .small-phrase {
+            position: absolute;
+            font-size: 20px;
+            color: #333;
+            animation: fadeInOut 3s infinite ease-in-out;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Animação para as frases */
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* Carta */
+        .letter-container {
+            display: none;
+            width: 280px;
+            height: 400px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            overflow-y: auto;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .letter {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .letter .footer {
+            font-size: 16px;
+            color: #555;
+            margin-top: 20px;
+        }
+
+        .close-btn {
+            background-color: #ff6347;
+            color: white;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            display: block;
+            margin-top: 20px;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Efeitos de transição do envelope */
+        .open .envelope {
+            transform: rotateX(180deg);
+        }
+
+        .open .letter-container {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fundo com corações caindo aleatoriamente -->
+    <div id="hearts"></div>
+
+    <!-- Nome "Sofia" caindo com fonte de estilo skatista -->
+    <div id="name-container"></div>
+
+    <!-- Frases e emojis -->
+    <div id="phrases-container">
+        <div class="phrase" style="top: 20%; left: 10%;">Sofia + Gabriel <span>❤️</span> pra sempre</div>
+        <div class="small-phrase" style="top: 80%; left: 50%;">G + S</div>
+    </div>
+
+    <!-- Envelope -->
+    <div class="envelope-container" onclick="openEnvelope()">
+        <div class="envelope"></div>
+    </div>
+
+    <!-- Carta -->
+    <div class="letter-container">
+        <div class="letter">
+            <h3>Oii minha vida, Sofia,</h3>
+            <p>Desde que você entrou na minha vida, tudo ficou mais colorido, mais alegre. Não há um dia em que eu não pense no quanto sou grato por te ter ao meu lado. Você é a do qual vo pra escola kkkk, a razão dos meus sorrisos bobos que voce tira de mim.</p>
+            <p>Cada momento com você é especial, cada palavra, cada gesto... tudo se torna mais significativo ao seu lado. Eu te amo mais do que qualquer palavra poderia expressar, e eu sempre vou cuida de voce.</p>
+            <p>Espero que possamos viver muitos mais momentos felizes juntos. Vamos fazer cada dia valer a pena, construindo nossa história com amor e carinho, que um dia nois se case e viva feliz pra semore.</p>
+            <p>Eu te quero pro resto da minha vida, quero  passa todos os momentos da minha vida ao seu lado.</p>
+            <p>Voce e muito especial pra mim, e muito mesmo, nem palavras mostram o quanto eu te amo.</p>
+            <p class="footer">Com todo meu amor,</p>
+            <p class="footer"><strong>Gabriel (O amor da sua vida.)</strong><br><em>Data: 04/03/2025</em></p>
+            <button class="close-btn" onclick="closeLetter()">Fechar Carta</button>
+        </div>
+    </div>
+
+    <script>
+        function createHearts() {
+            const heartContainer = document.getElementById('hearts');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            const isRed = Math.random() > 0.5;
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 4 + 4 + 's'; // Tempo da animação do coração
+            heart.innerHTML = isRed ? '❤️' : '💖';
+            heartContainer.appendChild(heart);
+
+            // Remover o coração após a animação
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Criar corações caindo em intervalos
+        setInterval(createHearts, 500);
+
+        // Função para abrir o envelope e mostrar a carta
+        function openEnvelope() {
+            const envelopeContainer = document.querySelector('.envelope-container');
+            const letterContainer = document.querySelector('.letter-container');
+            envelopeContainer.classList.add('open');
+            setTimeout(() => {
+                letterContainer.style.display = 'block';
+            }, 700); // Esperar a animação de rotação do envelope
+        }
+
+        // Função para fechar a carta
+        function closeLetter() {
+            const letterContainer = document.querySelector('.letter-container');
+            letterContainer.style.display = 'none';
+            const envelopeContainer = document.querySelector('.envelope-container');
+            envelopeContainer.classList.remove('open');
+        }
+
+        // Função para gerar o nome "Sofia" em lugares aleatórios com um ritmo mais suave
+        function createRandomName() {
+            const nameContainer = document.getElementById('name-container');
+            const nameDiv = document.createElement('div');
+            nameDiv.classList.add('name');
+            nameDiv.innerText = "Sofia";
+            nameDiv.style.left = Math.random() * 80 + 'vw';  // Localização aleatória
+            nameDiv.style.top = Math.random() * 80 + 'vh';  // Localização aleatória
+            nameDiv.style.animationDuration = (Math.random() * 2 + 2) + 's';  // Duração aleatória
+            nameContainer.appendChild(nameDiv);
+
+            // Remover o nome após a animação
+            setTimeout(() => {
+                nameDiv.remove();
+            }, 3000); // Tempo de animação
+        }
+
+        // Criar o nome "Sofia" em locais aleatórios com intervalos mais espaçados
+        setInterval(createRandomName, 1500);
+    </script>
+
+</body>
+</html>
