@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PRIMEIRA ATIVIDADE</title>
+  <style>
+    body {
+      background: #1e1e1e;
+      color: #ffffff; 
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      text-align: center; 
+      margin: 0; 
+      padding: 180px;
+    }
+
+    .container {
+      max-inline-size: 600px; 
+      margin: auto;
+      background: #1e1e1e;
+      padding: 20px; 
+      border-radius: 15px; 
+      box-shadow: 0px 0px 30px #0426ff;
+    }
+
+    h1 {
+      color: #d3cffb77; 
+      font-size: 2.2em; 
+      margin-block-end: 10px;
+      box-shadow: 0px 0px 15px rgba(2, 14, 118, 0.732);
+      border-radius: 15px;
+    }
+
+    .botao {
+      display: inline-block;
+      background: #0008ffb5;
+      color: white;
+      padding: 12px 20px;
+      font-size: 1.0em; 
+      border-radius: 17px; 
+      text-decoration: none; 
+      transition: 0.3s; 
+      box-shadow: 2px 2px 15px rgba(112, 133, 228, 0.645);
+    }
+
+    .botao:hover {
+      background: rgba(10, 31, 126, 0.645);
+      box-shadow: 2px 2px 15px rgba(112, 133, 228, 0.645);
+    }
+
+    .checkbox-label {
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    .resposta {
+      display: none;
+      font-size: 1.2em;
+      margin-block-start: 20px;
+    }
+
+    #resultado {
+      font-size: 1.5em;
+      margin-block-start: 20px;
+      font-weight: bold;
+    }
+
+    #verificarRespostas {
+      position: fixed;
+      inset-block-end: 20px;
+      inset-inline-end: 20px;
+      padding: 8px 15px;
+      font-size: 0.9em;
+      border-radius: 10px;
+      box-shadow: 2px 2px 10px rgba(112, 133, 228, 0.645);
+    }
+
+    .erro {
+      background-color: red;
+      padding: 10px; 
+      color: white;
+      font-size: 1.2em;
+      margin-block-start: 10px;
+      border-radius: 25px;
+      animation: erroAnim 2s ease-out;
+    }
+
+    .sucesso {
+      background-color: #28a745;
+      padding: 10px;
+      color: white;
+      font-size: 1.2em;
+      margin-block-start: 10px;
+      border-radius: 25px;
+      animation: sucessoAnim 2s ease-out;
+    }
+
+    @keyframes erroAnim {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes sucessoAnim {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Para que serve o HTML?</h1>
+    
+    <div>
+      <input type="radio" id="opcao1" name="pergunta" value="errado">
+      <label for="opcao1" class="checkbox-label">Serve para criar um aplicativo.</label>
+      <br>
+      <input type="radio" id="opcao2" name="pergunta" value="correto">
+      <label for="opcao2" class="checkbox-label">Serve para mostrar algo para alguém.</label>
+      <br>
+      <input type="radio" id="opcao3" name="pergunta" value="errado">
+      <label for="opcao3" class="checkbox-label">Serve para montar seus projetos e mostrar para o público.</label>
+    </div>
+
+    <div id="resultado"></div>
+
+    <a href="aula2.html" class="botao">Próxima Aula.</a>
+  </div>
+
+  <button class="botao" id="verificarRespostas">Verificar Resposta</button>
+
+  <script>
+    document.getElementById("verificarRespostas").onclick = function() {
+      const resposta = document.querySelector('input[name="pergunta"]:checked');
+
+      document.querySelectorAll('.checkbox-label').forEach(label => {
+        label.style.backgroundColor = 'transparent';
+        label.style.color = '#ffffff';
+      });
+
+      if (!resposta) {
+        document.getElementById("resultado").innerHTML = "Por favor, selecione uma resposta.";
+        document.getElementById("resultado").style.color = "yellow";
+        return;
+      }
+
+      if (resposta.value === "correto") {
+        document.getElementById("resultado").innerHTML = "Você acertou! O HTML realmente serve para mostrar algo para alguém.";
+        document.getElementById("resultado").className = "sucesso";
+
+        document.querySelector('label[for="opcao2"]').style.backgroundColor = "green";
+        document.querySelector('label[for="opcao2"]').style.color = "white";
+      } else {
+
+        document.getElementById("resultado").innerHTML = "Você errou. Tente novamente!";
+        document.getElementById("resultado").className = "erro";
+
+        if (resposta.id === "opcao1") {
+          document.querySelector('label[for="opcao1"]').style.backgroundColor = "red";
+          document.querySelector('label[for="opcao1"]').style.color = "white";
+        } else if (resposta.id === "opcao3") {
+          document.querySelector('label[for="opcao3"]').style.backgroundColor = "red";
+          document.querySelector('label[for="opcao3"]').style.color = "white";
+        }
+
+        document.querySelector('label[for="opcao2"]').style.backgroundColor = "green";
+        document.querySelector('label[for="opcao2"]').style.color = "white";
+      }
+    };
+  </script>
+</body>
+</html>
