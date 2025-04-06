@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GabbModz - Atualizações de Mods</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #00aaff;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-block-end: 20px;
+        }
+
+        p {
+            text-align: justify;
+            font-size: 1.2rem;
+            margin-block-end: 20px;
+            line-height: 1.8;
+        }
+
+        .category-container {
+            max-inline-size: 800px;
+            margin: 0 auto;
+        }
+
+        .mod-select {
+            inline-size: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            background-color: #222;
+            border: 1px solid #00aaff;
+            color: #fff;
+            border-radius: 5px;
+            margin-block-end: 20px;
+        }
+
+        .update-info {
+            margin-block-end: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .update-info.active {
+            display: block;
+        }
+
+        .update-title {
+            color: #00aaff;
+            font-size: 1.5rem;
+            margin-block-end: 10px;
+        }
+
+        .mod-link {
+            color: #00aaff;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: #121212;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .mod-link:hover {
+            background-color: #00aaff;
+            color: #121212;
+            text-decoration: underline;
+        }
+
+        .mod-link:active {
+            background-color: #0088cc;
+        }
+
+        /* Responsividade */
+        @media (max-inline-size: 768px) {
+            h2 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1rem;
+            }
+
+            .mod-select {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="category-container">
+        <h2>Atualizações de Mods [Ricardo Modz]</h2>
+        <p>Escolha um mod abaixo para ver as últimas atualizações e realizar o download.</p>
+
+        <select id="modSelect" class="mod-select">
+            <option value="">Selecione o mod</option>
+            <option value="mod1">1 - Trax Menu.</option>
+        </select>
+
+        <div id="mod1Update" class="update-info">
+            <h3 class="update-title">Atualização - Trax Menu</h3>
+            <p>Em breve..</p>
+            <a href="downloads/mod1.zip" class="mod-link" download>Baixar Trax Menu</a>
+        </div>
+      
+       <ul>
+
+      <br>
+      <br>
+        
+    </div>
+
+    <script>
+        document.getElementById('modSelect').addEventListener('change', function() {
+            const updateInfos = document.querySelectorAll('.update-info');
+            updateInfos.forEach(info => info.classList.remove('active'));
+
+            const selectedMod = this.value;
+            if (selectedMod) {
+                document.getElementById(`${selectedMod}Update`).classList.add('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
